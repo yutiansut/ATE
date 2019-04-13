@@ -1,8 +1,8 @@
 <template>
-  <div class="header">
-    <div class="back" v-if="back">返回</div>
+  <div class="header" :style="{background:background}">
+    <div class="back" @click="onBack" v-if="back"><i class="iconfont icon-back"></i></div>
     <slot name="left"></slot>
-    <h1>{{title || $route.meta.title}}</h1>
+    <h1 v-if="!isTitle">{{title || $route.meta.title}}</h1>
     <slot name="right"></slot>
     <!-- <div class="right"></div> -->
   </div>
@@ -17,12 +17,31 @@ export default {
     back: {
       type: Boolean,
       default: false
+    },
+    background: {
+      type: String,
+      default: ""
+    },
+    isTitle: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    // 返回上一页
+    onBack() {
+      // 返回到指定页面
+      let pathName = this.$route.meta.backName;
+      if (pathName) {
+        this.$router.goBackPathName(pathName);
+      } else {
+        this.$router.goBack();
+      }
+    }
+  },
   created() {}
 };
 </script>
@@ -34,7 +53,7 @@ export default {
   width: 100%;
   left: 0;
   top: 0;
-  background: #1a1b20;
+  background: #212226;
   z-index: 999;
 
   h1 {
@@ -42,6 +61,11 @@ export default {
     color: @color;
     font-size: 18px;
     font-weight: normal;
+  }
+
+  .icon-back{
+    font-size: 18px;
+    color: #a8a8a9;
   }
 
   .back,

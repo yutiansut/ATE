@@ -7,8 +7,9 @@
           <div class="tl">主区</div>
           <div class="tab_box">
             <ul>
-              <li v-for="item in 5" :class="{df:item%2}">
+              <li v-for="item in 5" :class="{df:item%2,active:item%2}">
                 <div class="list">
+                  <i class="love" @click="onLove(item)"></i>
                   EOS
                 </div>
                 <div class="list">
@@ -26,6 +27,7 @@
             <ul>
               <li v-for="item in 15" :class="{df:item%2}">
                 <div class="list">
+                  <i class="love" @click="onLove(item)"></i>
                   EOS
                 </div>
                 <div class="list">
@@ -56,10 +58,8 @@
 <script>
 import { Tab, Tabs } from "vant";
 
-import Header from "@/components/common/Header";
 export default {
   components: {
-    Header,
     [Tab.name]: Tab,
     [Tabs.name]: Tabs
   },
@@ -67,6 +67,10 @@ export default {
     return {
       active: 0
     };
+  },
+  methods: {
+    // 收藏
+    onLove() {}
   }
 };
 </script>
@@ -95,13 +99,18 @@ export default {
       .list {
         flex: 1;
 
+        .love{
+          width: 24.5px;
+          height: 55px;
+          background: url("../../../assets/images/icons/xinga.png") no-repeat left center;
+          background-size: 17px;
+        }
         &:first-child {
           line-height: 55px;
-
-          background: url("../../../assets/images/icons/xing.png") no-repeat left center;
-          background-size: 17px;
-          padding-left: 24.5px;
+          display: flex;
+          align-items: center;
         }
+        
         &:last-child {
           line-height: 55px;
           text-align: right;
@@ -126,7 +135,14 @@ export default {
           }
         }
       }
-
+      &.active{
+        .list{
+          .love {
+            background: url("../../../assets/images/icons/xing.png") no-repeat left center;
+            background-size: 17px;
+          }
+        }
+      }
       &.df {
         .list {
           &:last-child {

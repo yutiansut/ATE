@@ -2,11 +2,13 @@
     font-family: "苹方";
     font-size: 14px;
     color: @color;
+    // max-width: 768Px;
+    // margin: 0 auto;
 }
 
 // 定义全局变量
 
-@dbBgColor: #141414; //底层背景
+@dbBgColor: #1a1b20; //底层背景
 @bgColor: #2b2c2f; //box背景
 
 @color: #fff; //主要字体颜色
@@ -15,6 +17,8 @@
 @activeColor: #f73535; //active颜色
 
 @bdColor: #f1f1f1; //边框颜色
+
+@disColor: #afafaf; //禁用颜色
 
 
 
@@ -52,6 +56,17 @@ html,
 input,
 textarea {
     outline: none;
+    background: none;
+    border: 0;
+    border-bottom: 1Px solid #606062;
+    height: 35px;
+    padding: 6Px 12Px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+input::-webkit-input-placeholder {
+    color: #565659;
 }
 
 
@@ -119,4 +134,13 @@ textarea {
 
 .martop {
     margin-top: 10px;
+}
+
+.submit {
+    height: 42.5px;
+    line-height: 42.5px;
+    border-radius: 20.3px;
+    text-align: center;
+    margin-top: 41.5px;
+    font-size: 16px;
 }

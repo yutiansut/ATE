@@ -30,13 +30,13 @@ Axios.interceptors.response.use(response => {
 });
 
 
-export default (url, params = {}, method = "post") => {
+export default (params = {}) => {
     let httpDefault = {
-        method: method,
+        method: params.type,
         baseURL: baseURL,
-        url: url,
-        params: method == 'get' || method == 'delete' ? params : null,
-        data: method == 'post' || method == 'put' ? params : null,
+        url: params.url,
+        params: method == 'get' || method == 'delete' ? params.data : null,
+        data: method == 'post' || method == 'put' ? params.data : null,
         timeout: 10000
     }
 

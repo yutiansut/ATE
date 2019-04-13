@@ -7,6 +7,9 @@ import store from "./store";
 import 'lib-flexible'
 
 
+// 全局组件-Header
+import Header from "@/components/common/Header";
+Vue.component('Header', Header);
 
 Vue.config.productionTip = false;
 

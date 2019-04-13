@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header>
-      <div class="left icons" slot="left"><img src="@/assets/images/icons/geren.png" alt=""></div>
+      <div class="left icons" slot="left" @click="$router.push('/user')"><img src="@/assets/images/icons/geren.png" alt=""></div>
       <div class="right icons" slot="left"><img src="@/assets/images/icons/shezhi.png" alt=""></div>
     </Header>
     <van-swipe :autoplay="3000" indicator-color="white" class="banner">
@@ -45,11 +45,9 @@
 </template>
 
 <script>
-import Header from "@/components/common/Header";
 import { Swipe, SwipeItem } from "vant";
 export default {
   components: {
-    Header,
     [Swipe.name]: Swipe,
     [SwipeItem.name]: SwipeItem
   },
@@ -79,9 +77,6 @@ export default {
   background: #222324;
   padding: 0 15px;
   color: @color999;
-}
-.martop {
-  margin-top: 10px;
 }
 .news {
   padding: 0 15px;
