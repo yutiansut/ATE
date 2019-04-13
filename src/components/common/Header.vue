@@ -95,5 +95,13 @@ export default {
       background: @bgColor;
     }
   }
+
+  .icons {
+    display: flex;
+    align-items: center;
+    img {
+      width: 19px;
+    }
+  }
 }
 </style>

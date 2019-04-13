@@ -59,13 +59,6 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.icons {
-  display: flex;
-  align-items: center;
-  img {
-    width: 19px;
-  }
-}
 .banner {
   img {
     width: 100%;

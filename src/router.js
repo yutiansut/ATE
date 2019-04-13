@@ -62,13 +62,13 @@ const router = new Router({
           },
           component: resolve => require(["@/views/tabIndex/views/Quotation"], resolve),
         }, {
-          path: 'b2b_b2c',
-          name: 'b2b_b2c',
-          alias: '/b2b_b2c',
+          path: 'c2c_b2c',
+          name: 'c2c_b2c',
+          alias: '/c2c_b2c',
           meta: {
-            title: "B2B/B2C"
+            title: "C2C/B2C"
           },
-          component: resolve => require(["@/views/tabIndex/views/B2B_B2C"], resolve),
+          component: resolve => require(["@/views/tabIndex/views/C2C_B2C"], resolve),
         }, {
           path: 'biBiTransaction',
           name: 'biBiTransaction',
@@ -83,7 +83,7 @@ const router = new Router({
         name: 'user',
         meta: {
           title: "我的",
-          isLogin:true
+          isLogin: true
         },
         component: resolve => require(["@/views/user/User"], resolve),
       }, {
@@ -112,9 +112,9 @@ Router.prototype.goBackPathName = function (pathName) {
 };
 
 router.beforeEach((to, from, next) => {
-  if(to.meta.isLogin && !Store.state.userInfo){
+  if (to.meta.isLogin && !Store.state.userInfo) {
     next('/login');
-  }else{
+  } else {
     next();
   }
 })
