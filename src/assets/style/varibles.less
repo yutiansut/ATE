@@ -1,0 +1,122 @@
+* {
+    font-family: "苹方";
+    font-size: 14px;
+    color: @color;
+}
+
+// 定义全局变量
+
+@dbBgColor: #141414; //底层背景
+@bgColor: #2b2c2f; //box背景
+
+@color: #fff; //主要字体颜色
+@color999: #999; //次要字体颜色
+
+@activeColor: #f73535; //active颜色
+
+@bdColor: #f1f1f1; //边框颜色
+
+
+
+img {
+    max-width: 100%;
+}
+
+.img {
+    font-size: 0;
+}
+
+a:focus,
+button:focus,
+input:focus,
+textarea:focus {
+    outline: none;
+}
+
+a,
+a:hover,
+a:active {
+    text-decoration: none;
+}
+
+body,
+html,
+#app,
+.container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    overflow-x: hidden;
+}
+
+input,
+textarea {
+    outline: none;
+}
+
+
+// 页面动画
+.rel {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    // overflow: hidden;
+}
+
+.Router {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    background: @dbBgColor;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    transition: all .2s cubic-bezier(.55, 0, .1, 1);
+}
+
+
+// // 安卓切换效果
+// .slide-left-enter, .slide-right-leave-active {
+//   opacity: 0;
+//   -webkit-transform: translate(50px, 0);
+//   transform: translate(50px, 0);
+// }
+// .slide-left-leave-active, .slide-right-enter {
+//   opacity: 0;
+//   -webkit-transform: translate(-50px, 0);
+//   transform: translate(-50px, 0);
+// }
+
+
+// IOS切换效果
+.slide-left-enter,
+.slide-right-leave-active {
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+    z-index: 1;
+}
+
+.slide-left-leave-active,
+.slide-right-enter {
+    -webkit-transform: translateX(-50px);
+    /*no*/
+    transform: translateX(-50px);
+    /*no*/
+    z-index: -1;
+}
+
+.mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, .5);
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+}
+
+.martop {
+    margin-top: 10px;
+}
