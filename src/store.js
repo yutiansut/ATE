@@ -3,11 +3,26 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
+
 export default new Vuex.Store({
   state: {
-    token: {},
-    userInfo: {}
+    token: null,
+    userInfo: null,
+    lang: 'zh-CN'
   },
-  mutations: {},
+  getters: {
+    token(state) {
+      return state.token;
+    },
+    userInfo(state) {
+      return state.userInfo;
+    }
+  },
+  mutations: {
+    setLang(state, lang) {
+      localStorage.lang = lang;
+      state.lang = lang;
+    }
+  },
   actions: {}
 });

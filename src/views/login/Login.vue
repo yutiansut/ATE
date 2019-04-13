@@ -1,6 +1,6 @@
 <template>
     <div class="rel">
-        <Header back isTitle></Header>
+        <Header back></Header>
         <div class="logo img"><img src="@/assets/images/logo.png" alt=""></div>
 
         <div class="form">

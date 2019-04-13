@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
+import Store from '@/store';
 
 Vue.use(Router);
 
@@ -81,9 +82,17 @@ const router = new Router({
         path: '/user',
         name: 'user',
         meta: {
-          title: "我的"
+          title: "我的",
+          isLogin:true
         },
         component: resolve => require(["@/views/user/User"], resolve),
+      }, {
+        path: '/setting',
+        name: 'setting',
+        meta: {
+          title: "设置"
+        },
+        component: resolve => require(["@/views/setting/Setting"], resolve),
       },]
     }
   ]
@@ -94,12 +103,20 @@ const router = new Router({
 Router.prototype.goBack = function () {
   this.isBack = true;
   window.history.go(-1);
-}
+};
 
 // 后退到指定页
 Router.prototype.goBackPathName = function (pathName) {
   this.isBack = true;
   router.push({ name: pathName })
-}
+};
+
+router.beforeEach((to, from, next) => {
+  if(to.meta.isLogin && !Store.state.userInfo){
+    next('/login');
+  }else{
+    next();
+  }
+})
 
 export default router;

@@ -2,7 +2,7 @@
   <div>
     <Header>
       <div class="left icons" slot="left" @click="$router.push('/user')"><img src="@/assets/images/icons/geren.png" alt=""></div>
-      <div class="right icons" slot="left"><img src="@/assets/images/icons/shezhi.png" alt=""></div>
+      <div class="right icons" slot="left" @click="$router.push('/setting')"><img src="@/assets/images/icons/shezhi.png" alt=""></div>
     </Header>
     <van-swipe :autoplay="3000" indicator-color="white" class="banner">
       <van-swipe-item class="img"><img src="@/assets/images/banner.jpg" alt=""></van-swipe-item>

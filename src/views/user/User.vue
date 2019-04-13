@@ -5,8 +5,16 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
-  components: {}
+  computed: {
+    ...mapGetters(["userInfo"])
+  },
+  components: {},
+  data() {
+    return {};
+  },
+  created() {}
 };
 </script>
 

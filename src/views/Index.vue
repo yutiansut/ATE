@@ -22,11 +22,9 @@ export default {
 
   beforeRouteUpdate(to, from, next) {
     let isBack = this.$router.isBack;
-    if (isBack) {
-      this.transitionName = "slide-right";
-    } else {
-      this.transitionName = "slide-left";
-    }
+
+    this.transitionName = isBack ? "slide-right" : "slide-left";
+
     setTimeout(() => {
       this.$router.isBack = false;
       next();

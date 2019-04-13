@@ -1,35 +1,35 @@
 <template>
-    <div class="rel">
-        <Header back isTitle></Header>
-        <div class="logo img"><img src="@/assets/images/logo.png" alt=""></div>
+  <div class="rel">
+    <Header back></Header>
+    <div class="logo img"><img src="@/assets/images/logo.png" alt=""></div>
 
-        <div class="form">
-            <div v-if="!isEmail" class="list tel" :class="{active:formData.account!=''}">
-                <input type="tel" v-model="formData.account" placeholder="手机号码">
-                <div class="qh" @click="$router.push('/telAreaCode')">+86<i class="iconfont icon-xia"></i></div>
-            </div>
-            <div v-else class="list email" :class="{active:formData.account!=''}">
-                <input type="email" v-model="formData.account" placeholder="邮箱">
-            </div>
-            <div class="list yzm" :class="{active:formData.account!=''}">
-                <input type="text" v-model="formData.account" placeholder="验证码">
-                <div class="right_btn" @click="sendCode"><span>{{smsCodeConfig.text}}</span></div>
-            </div>
-            <div class="list pwd" :class="{active:formData.pwd!='',show:showPwd}">
-                <input :type="showPwd?'text':'password'" v-model="formData.pwd" placeholder="重置密码">
-                <div class="r_icon" @click="showPwd=!showPwd"></div>
-            </div>
-            <div class="list pwd" :class="{active:formData.account!=''}">
-                <input type="text" v-model="formData.account" placeholder="邀请码（选填）">
-            </div>
+    <div class="form">
+      <div v-if="!isEmail" class="list tel" :class="{active:formData.account!=''}">
+        <input type="tel" v-model="formData.account" placeholder="手机号码">
+        <div class="qh" @click="$router.push('/telAreaCode')">+86<i class="iconfont icon-xia"></i></div>
+      </div>
+      <div v-else class="list email" :class="{active:formData.account!=''}">
+        <input type="email" v-model="formData.account" placeholder="邮箱">
+      </div>
+      <div class="list yzm" :class="{active:formData.account!=''}">
+        <input type="text" v-model="formData.account" placeholder="验证码">
+        <div class="right_btn" @click="sendCode"><span>{{smsCodeConfig.text}}</span></div>
+      </div>
+      <div class="list pwd" :class="{active:formData.pwd!='',show:showPwd}">
+        <input :type="showPwd?'text':'password'" v-model="formData.pwd" placeholder="重置密码">
+        <div class="r_icon" @click="showPwd=!showPwd"></div>
+      </div>
+      <div class="list pwd" :class="{active:formData.account!=''}">
+        <input type="text" v-model="formData.account" placeholder="邀请码（选填）">
+      </div>
 
-            <div class="submit" :class="{active:formData.account!='' && formData.pwd!=''}">注册</div>
+      <div class="submit" :class="{active:formData.account!='' && formData.pwd!=''}">注册</div>
 
-            <div class="bom">
-                <span @click="isEmail=!isEmail">使用{{useRegister}}</span>
-            </div>
-        </div>
+      <div class="bom">
+        <span @click="isEmail=!isEmail">使用{{useRegister}}</span>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>

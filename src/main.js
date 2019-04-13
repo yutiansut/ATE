@@ -4,7 +4,11 @@ import router from "./router";
 import store from "./store";
 
 // 手淘
-import 'lib-flexible'
+import 'lib-flexible';
+
+// 多语言
+import i18n from './lang/index';
+
 
 
 // 全局组件-Header
@@ -14,6 +18,7 @@ Vue.component('Header', Header);
 Vue.config.productionTip = false;
 
 new Vue({
+  i18n,
   router,
   store,
   render: h => h(App)

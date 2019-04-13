@@ -3,7 +3,7 @@
     <router-view class="Router tab_box" />
 
     <div class="tabNav">
-      <router-link :class="{active:$route.name=='index'}" to="/">首页</router-link>
+      <router-link :class="{active:$route.name=='index'}" to="/">{{ $t("message.language") }}</router-link>
       <router-link :class="{active:$route.name=='quotation'}" to="/quotation">行情</router-link>
       <router-link :class="{active:$route.name=='b2b_b2c'}" to="/b2b_b2c">B2B/B2C</router-link>
       <router-link :class="{active:$route.name=='biBiTransaction'}" to="/biBiTransaction">币币交易</router-link>
@@ -13,6 +13,7 @@
 
 <script>
 import { Button, Cell } from "vant";
+import { setTimeout } from "timers";
 
 export default {
   components: {
@@ -22,7 +23,8 @@ export default {
     return {
       active: 0
     };
-  }
+  },
+  created() {}
 };
 </script>
 <style lang="less" scoped>
