@@ -4,57 +4,69 @@
       <div class="left icons" slot="left" @click="$router.push('/user')"><img src="@/assets/images/icons/geren.png" alt=""></div>
       <div class="right icons" slot="left" @click="$router.push('/setting')"><img src="@/assets/images/icons/shezhi.png" alt=""></div>
     </Header>
-    <van-swipe :autoplay="3000" indicator-color="white" class="banner">
-      <van-swipe-item class="img"><img src="@/assets/images/banner.jpg" alt=""></van-swipe-item>
-      <van-swipe-item class="img"><img src="@/assets/images/banner.jpg" alt=""></van-swipe-item>
-      <van-swipe-item class="img"><img src="@/assets/images/banner.jpg" alt=""></van-swipe-item>
-    </van-swipe>
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" :class="{refreshActive:isLoading}" class="index_refresh_box">
+      <van-swipe :autoplay="3000" indicator-color="white" class="banner">
+        <van-swipe-item class="img"><img src="@/assets/images/banner.jpg" alt=""></van-swipe-item>
+        <van-swipe-item class="img"><img src="@/assets/images/banner.jpg" alt=""></van-swipe-item>
+        <van-swipe-item class="img"><img src="@/assets/images/banner.jpg" alt=""></van-swipe-item>
+      </van-swipe>
 
-    <div class="tl martop">
-      推荐涨幅
-    </div>
-
-    <div class="news martop">
-      <div class="left">习近平总书记连任7届总书记</div>
-      <div class="more"><span>更多</span></div>
-    </div>
-
-    <div class="tab_xm martop">
-      <div class="menu">
-        <div @click="type=1" :class="{active:type==1}"><span>涨幅榜</span></div>
-        <div @click="type=2" :class="{active:type==2}"><span>新币榜</span></div>
+      <div class="tl martop">
+        推荐涨幅
       </div>
-      <div class="tab_box">
-        <ul>
-          <li v-for="item in 10" :class="{df:item%2}">
-            <div class="list">
-              BTC/UTHD
-            </div>
-            <div class="list">
-              <span>0.{{item}}0060510</span>
-              <span>0.7354 CNY</span>
-            </div>
-            <div class="list">
-              <span>+{{item}}.93%</span>
-            </div>
-          </li>
-        </ul>
+
+      <div class="news martop">
+        <div class="left">习近平总书记连任7届总书记</div>
+        <div class="more"><span>更多</span></div>
       </div>
-    </div>
+
+      <div class="tab_xm martop">
+        <div class="menu">
+          <div @click="type=1" :class="{active:type==1}"><span>涨幅榜</span></div>
+          <div @click="type=2" :class="{active:type==2}"><span>新币榜</span></div>
+        </div>
+        <div class="tab_box">
+          <ul>
+            <li v-for="item in 10" :class="{df:item%2}">
+              <div class="list">
+                BTC/UTHD
+              </div>
+              <div class="list">
+                <span>0.{{item}}0060510</span>
+                <span>0.7354 CNY</span>
+              </div>
+              <div class="list">
+                <span>+{{item}}.93%</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </van-pull-refresh>
   </div>
 </template>
 
 <script>
-import { Swipe, SwipeItem } from "vant";
+import { Swipe, SwipeItem, PullRefresh } from "vant";
 export default {
   components: {
     [Swipe.name]: Swipe,
-    [SwipeItem.name]: SwipeItem
+    [SwipeItem.name]: SwipeItem,
+    [PullRefresh.name]: PullRefresh
   },
   data() {
     return {
-      type: 1
+      type: 1,
+      isLoading: false
     };
+  },
+  methods: {
+    // 下拉刷新
+    onRefresh() {
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 1500);
+    }
   }
 };
 </script>
@@ -191,6 +203,15 @@ export default {
         }
       }
     }
+  }
+}
+
+.index_refresh_box{
+  height: calc(100vh - 100px);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  .van-pull-refresh__track{
+    height: calc(100vh - 100px);
   }
 }
 </style>

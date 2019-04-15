@@ -129,7 +129,7 @@ input::-webkit-input-placeholder {
     background: rgba(0, 0, 0, .5);
     width: 100%;
     height: 100%;
-    z-index: 99;
+    z-index: 10001;
 }
 
 .martop {
@@ -143,4 +143,16 @@ input::-webkit-input-placeholder {
     text-align: center;
     margin-top: 41.5px;
     font-size: 16px;
+}
+
+
+// 下拉刷新
+.refreshActive {
+    .van-pull-refresh__track {
+        margin-top: 40px;
+    }
+}
+
+.van-pull-refresh__track {
+    transition: all .3s;
 }

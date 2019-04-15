@@ -70,36 +70,36 @@ export default {
     &:nth-child(2) {
       background: url("../../assets/images/icons/hangqinga.png") no-repeat
         center 7.5px;
-      background-size: 19px;
+      background-size: 18px;
 
       &.active {
         background: url("../../assets/images/icons/hangqing.png") no-repeat
           center 7.5px;
-        background-size: 19px;
+        background-size: 18px;
       }
     }
 
     &:nth-child(3) {
       background: url("../../assets/images/icons/b2ba.png") no-repeat center
         7.5px;
-      background-size: 24px;
+      background-size: 21px;
 
       &.active {
         background: url("../../assets/images/icons/b2b.png") no-repeat center
           7.5px;
-        background-size: 24px;
+        background-size: 21px;
       }
     }
 
     &:nth-child(4) {
-      background: url("../../assets/images/icons/wodea.png") no-repeat center
+      background: url("../../assets/images/icons/bba.png") no-repeat center
         7.5px;
-      background-size: 18px;
+      background-size: 21px;
 
       &.active {
-        background: url("../../assets/images/icons/wode.png") no-repeat center
+        background: url("../../assets/images/icons/bb.png") no-repeat center
           7.5px;
-        background-size: 18px;
+        background-size: 21px;
       }
     }
   }
