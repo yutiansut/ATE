@@ -27,7 +27,7 @@
           <span :class="{active:active==0}" @click="active=0">买入</span>
           <span :class="{active:active==1}" @click="active=1">卖出</span>
         </div>
-        <div class="right">交易记录 <i class="iconfont icon-right"></i></div>
+        <div class="right" @click="$router.push('/tradeRecord')">交易记录 <i class="iconfont icon-right"></i></div>
       </div>
 
       <div class="select_group">
@@ -563,41 +563,7 @@ export default {
      }
   }
 }
-.slide-fade-enter-active {
-  transition: all .3s ease;
-}
-.slide-fade-leave-active {
-  transition: all .1s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active for below version 2.1.8 */ {
-  transform: translateY(-20px);
-  opacity: 0;
-}
-.select_box{
-  position: absolute;
-  z-index: 999;
-  width: 100%;
-  top: 45px;
-  left: 0;
-  z-index: 999;
-  background: #1f2326;
-  padding: 0 13px;
-  box-sizing: border-box;
-  .list{
-    box-sizing: border-box;
-    padding-left: 20px;
-    border-bottom: 1Px solid @bdColor;
 
-    &:last-child{
-      border-bottom: 0;
-    }
-    &.active{
-      background: url("../../../assets/images/formIcons/selectd.png") no-repeat right center;
-      background-size: 22px;
-    }
-  }
-}
 
 .fix_top{
   position: fixed;
@@ -667,6 +633,13 @@ export default {
     .select{
       flex: 1;
       color: @color999;
+    }
+  }
+
+  .select_box{
+    .list.active {
+        background: url("../../../assets/images/formIcons/selectd.png") no-repeat right center;
+        background-size: 22px;
     }
   }
 }

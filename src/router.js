@@ -93,7 +93,14 @@ const router = new Router({
           title: "设置"
         },
         component: resolve => require(["@/views/setting/Setting"], resolve),
-      },]
+      }, {
+        path: '/tradeRecord',
+        name: 'tradeRecord',
+        meta: {
+          title: "交易记录"
+        },
+        component: resolve => require(["@/views/tradeRecord/Index"], resolve),
+      }]
     }
   ]
 });

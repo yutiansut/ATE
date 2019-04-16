@@ -205,6 +205,18 @@ export default {
     }
   }
 
+  
+ 
+</style>
+<style lang="less">
+.quotation{
+  .van-tabs--line{
+    padding-top:0;
+  }
+
+  .van-tabs__wrap{
+    display: none;
+  }
   .quotation_refresh_box{
     height: calc(100vh - 100px);
     overflow: auto;
@@ -212,52 +224,6 @@ export default {
     .van-pull-refresh__track{
       height: calc(100vh - 100px);
     }
-  }
- 
-</style>
-<style lang="less">
-.quotation{
-  // .van-tabs__wrap{
-  //   position: fixed;
-  //   top:50px;
-  //   left:0;
-  // }
-  // .van-tabs__line{
-  //   background:@activeColor;
-  // }
-  // .van-tab{
-  //   // flex:none;
-  //   // padding:0 27px;
-  //   span{
-  //     color:@color999;
-  //     font-size:15px;
-  //   }
-  //   &.van-tab--active{
-  //     span{
-  //       color:@activeColor;
-  //     }
-  //   }
-  // }
-  // .van-tabs__nav{
-  //   background:@bgColor;
-  // }
-  // .van-tabs--line .van-tabs__wrap{
-  //   line-height:50px;
-  //   height:50px;
-  // }
-  // .van-hairline--top-bottom::after{
-  //   border:0;
-  // }
-  // .van-tabs--line{
-  //   padding-top:50px;
-  // }
-  
-  .van-tabs--line{
-    padding-top:0;
-  }
-
-  .van-tabs__wrap{
-    display: none;
   }
 }
 </style>

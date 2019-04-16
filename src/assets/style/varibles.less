@@ -156,3 +156,63 @@ input::-webkit-input-placeholder {
 .van-pull-refresh__track {
     transition: all .3s;
 }
+
+// 下拉select 与动画
+
+.slide-fade-enter-active {
+    transition: all .3s ease;
+}
+
+.slide-fade-leave-active {
+    transition: all .1s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.slide-fade-enter,
+.slide-fade-leave-to
+
+/* .slide-fade-leave-active for below version 2.1.8 */
+    {
+    transform: translateY(-20px);
+    opacity: 0;
+}
+
+.select_box {
+    position: absolute;
+    z-index: 999;
+    width: 100%;
+    top: 45px;
+    left: 0;
+    z-index: 999;
+    background: #1f2326;
+    padding: 0 13px;
+    box-sizing: border-box;
+
+    .list {
+        box-sizing: border-box;
+        padding-left: 20px;
+        border-bottom: 1Px solid @bdColor;
+
+        &:last-child {
+            border-bottom: 0;
+        }
+    }
+}
+
+// 修改dialog样式
+.van-dialog {
+    background: #202226;
+
+
+
+    .van-button {
+        background: #3b3d48;
+
+        &:last-child {
+            background: #363840;
+
+            .van-button__text {
+                color: @color999;
+            }
+        }
+    }
+}

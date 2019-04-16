@@ -1,0 +1,153 @@
+.top_search {
+    position: fixed;
+    z-index: 999;
+    top: 95px;
+    left: 0;
+    width: 100%;
+    height: 45px;
+    line-height: 45px;
+    background: @bgColor;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 13px;
+    box-sizing: border-box;
+
+    .left {
+        display: flex;
+
+        span {
+            background: #393a3d;
+            width: 70px;
+            height: 30px;
+            color: @color999;
+            line-height: 30px;
+            text-align: center;
+
+            &.active {
+                color: @color;
+                background: #0fc055;
+            }
+
+            &:last-child {
+                &.active {
+                    background: @activeColor;
+                }
+            }
+        }
+    }
+
+    .right {
+        display: flex;
+
+        .select_group {
+            margin-left: 16px;
+            color: @color999;
+
+            i {
+                color: @color999;
+            }
+        }
+    }
+
+    .select_box {
+        .list.active {
+            background: url("../../../../assets/images/formIcons/selectd.png") no-repeat right center;
+            background-size: 22px;
+        }
+    }
+}
+
+.trade_box {
+    .list {
+        padding: 22px 14px;
+        box-sizing: border-box;
+        background: @bgColor;
+        margin-top: 5px;
+
+        .top {
+            display: flex;
+            margin-bottom: 24px;
+
+            span {
+                margin-right: 44px;
+
+                &:nth-child(2) {
+                    color: #0ec857;
+                    font-size: 15px;
+                }
+            }
+        }
+
+        .btn {
+            width: 58px;
+            height: 28px;
+            box-sizing: border-box;
+            display: line-block;
+            flex: 1;
+            text-align: right;
+            margin-right: 0 !important;
+
+            em {
+                border: 1px solid @color;
+                display: block;
+                float: right;
+                width: 58px;
+                height: 28px;
+                line-height: 28px;
+                text-align: center;
+
+                &:active {
+                    background: #393a3d;
+                }
+            }
+        }
+
+        .time {
+            display: flex;
+
+            .lx_mx {
+                flex: 1;
+
+                span {
+                    display: block;
+                    margin-bottom: 5px;
+
+                    &:last-child {
+                        color: @color999;
+                    }
+                }
+
+
+                &:nth-child(2) {
+                    span:first-child {
+                        color: #0ec857;
+                    }
+                }
+
+                &:last-child {
+                    span {
+                        text-align: right;
+                    }
+                }
+            }
+        }
+
+        .bom {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+
+            .lx_mx {
+                span {
+                    display: block;
+
+                    &:last-child {
+                        margin-top: 5px;
+                        color: @color999;
+                    }
+                }
+            }
+        }
+    }
+}
