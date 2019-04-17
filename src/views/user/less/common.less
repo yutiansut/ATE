@@ -1,0 +1,101 @@
+.rel {
+    padding-top: 50px;
+}
+
+.top {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    background: @bgColor;
+    text-align: center;
+
+    h1 {
+        font-size: 18px;
+        color: @activeColor;
+        padding: 10px 0;
+    }
+
+    .tips {
+        color: @color999;
+    }
+}
+
+.hide_no {
+    height: 50px;
+    line-height: 50px;
+    padding: 0 13px;
+    align-items: center;
+    color: @color999;
+    font-size: 15px;
+    display: flex;
+    background: @bgColor;
+    margin-top: 10px;
+}
+
+.list_box {
+    margin-top: 10px;
+    background: @bgColor;
+
+    .top_t {
+        padding: 0 13px;
+        padding-top: 20px;
+        display: flex;
+        justify-content: space-between;
+
+        .right {
+            color: @activeColor;
+        }
+
+        div {
+            font-size: 15px;
+        }
+    }
+
+    .prices {
+        padding: 0 13px;
+        padding-top: 20px;
+
+        display: flex;
+        justify-content: space-between;
+
+        .lix {
+            span {
+                display: block;
+
+                &:last-child {
+                    color: @color999;
+                    margin-top: 15px;
+                }
+            }
+
+            &:last-child {
+                text-align: right;
+            }
+        }
+    }
+
+    .btn_group {
+        border-top: 1px solid #37383b;
+        margin-top: 25px;
+        display: flex;
+
+        .btn {
+            width: 25%;
+            border-right: 1px solid #37383b;
+            height: 45px;
+            line-height: 45px;
+            text-align: center;
+            color: @activeColor;
+
+            &:last-child {
+                border-right: 0;
+            }
+
+            &:active {
+                background: #37383b;
+            }
+  }
+  }
+  }

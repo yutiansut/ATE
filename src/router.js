@@ -82,11 +82,43 @@ const router = new Router({
         path: '/user',
         name: 'user',
         meta: {
-          title: "我的",
-          isLogin: true
+          title: "个人中心",
+          isLogin: false
         },
         component: resolve => require(["@/views/user/User"], resolve),
       }, {
+        path: '/user/c2c_b2c',
+        name: 'userC2c_b2c',
+        meta: {
+          title: "C2C_B2C资产",
+          isLogin: false
+        },
+        component: resolve => require(["@/views/user/C2C_B2C"], resolve),
+      },{
+        path: '/user/bibi',
+        name: 'userbibi',
+        meta: {
+          title: "币币资产",
+          isLogin: false
+        },
+        component: resolve => require(["@/views/user/BiBi"], resolve),
+      },{
+        path: '/user/msgList',
+        name: 'msgList',
+        meta: {
+          title: "留言列表",
+          isLogin: false
+        },
+        component: resolve => require(["@/views/user/MsgList"], resolve),
+      },{
+        path: '/user/msgDetails',
+        name: 'msgDetails',
+        meta: {
+          title: "留言反馈详情",
+          isLogin: false
+        },
+        component: resolve => require(["@/views/user/MsgDetails"], resolve),
+      },{
         path: '/setting',
         name: 'setting',
         meta: {
@@ -100,6 +132,13 @@ const router = new Router({
           title: "交易记录"
         },
         component: resolve => require(["@/views/tradeRecord/Index"], resolve),
+      }, {
+        path: '/advertisementRelease',
+        name: 'advertisementRelease',
+        meta: {
+          title: "发布广告"
+        },
+        component: resolve => require(["@/views/advertisement/Release"], resolve),
       }]
     }
   ]

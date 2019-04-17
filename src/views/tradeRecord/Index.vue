@@ -46,7 +46,10 @@ export default {
       active: 2
     };
   },
-  methods: {}
+  methods: {},
+  created() {
+    this.active = this.$route.query.active || 0;
+  }
 };
 </script>
 <style lang="less" scoped>

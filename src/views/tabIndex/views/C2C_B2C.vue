@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header>
-      <div class="right" slot="left" @click="$router.push('/setting')">发布广告</div>
+      <div class="right" slot="left" @click="$router.push('/advertisementRelease')">发布广告</div>
     </Header>
 
     <div class="fix_top">
@@ -390,7 +390,7 @@ export default {
 
     &:nth-child(2){
       span:first-child{
-        color: #0fc055;
+        color: @lvColor;
       }
     }
 
@@ -409,7 +409,7 @@ export default {
 
     input{
       padding-right: 50px;
-      border-color: #0fc055;
+      border-color: @lvColor;
       border-width: 2Px;
     }
     .right{
@@ -500,7 +500,7 @@ export default {
       width: 90px;
       height: 37.5px;
       line-height: 37.5px;
-      background: #0fc055;
+      background: @lvColor;
       border-radius: 18.8px;
       text-align: center;
 

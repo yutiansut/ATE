@@ -16,6 +16,8 @@
 
 @activeColor: #f73535; //active颜色
 
+@lvColor: #0fc055; //绿色
+
 @bdColor: #f1f1f1; //边框颜色
 
 @disColor: #afafaf; //禁用颜色
@@ -68,6 +70,35 @@ textarea {
 input::-webkit-input-placeholder {
     color: #565659;
 }
+
+
+.checkbox,
+.radio {
+    height: 14px;
+    width: 14px;
+    border: 1Px solid #a7a7a7;
+    margin-right: 10px;
+    position: relative;
+    padding: 4px;
+    box-sizing: border-box;
+
+    &.active {
+        &:after {
+            content: "";
+            position: absolute;
+            left: 20%;
+            top: 20%;
+            width: 60%;
+            height: 60%;
+            background: @activeColor;
+        }
+    }
+}
+
+.radio {
+    border-radius: 50%;
+}
+
 
 
 // 页面动画
@@ -186,6 +217,9 @@ input::-webkit-input-placeholder {
     background: #1f2326;
     padding: 0 13px;
     box-sizing: border-box;
+    max-height: 400px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
 
     .list {
         box-sizing: border-box;
@@ -215,4 +249,9 @@ input::-webkit-input-placeholder {
             }
         }
     }
+}
+
+.van-actionsheet__name,
+.van-actionsheet__cancel {
+    color: #333;
 }
