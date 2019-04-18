@@ -62,7 +62,7 @@ textarea {
     border: 0;
     border-bottom: 1Px solid #606062;
     height: 35px;
-    padding: 6Px 12Px;
+    padding: 6px 12px;
     box-sizing: border-box;
     width: 100%;
 }
@@ -233,19 +233,38 @@ input::-webkit-input-placeholder {
 }
 
 // 修改dialog样式
+// .van-dialog {
+//     background: #202226;
+
+
+
+//     .van-button {
+//         background: #3b3d48;
+
+//         &:last-child {
+//             background: #363840;
+
+//             .van-button__text {
+//                 color: @color999;
+//             }
+//         }
+//     }
+// }
+
 .van-dialog {
-    background: #202226;
-
-
+    .van-dialog__header {
+        color: #333;
+        font-size: 15px;
+    }
 
     .van-button {
-        background: #3b3d48;
+        .van-button__text {
+            color: #333;
+        }
 
         &:last-child {
-            background: #363840;
-
             .van-button__text {
-                color: @color999;
+                color: @activeColor;
             }
         }
     }
@@ -254,4 +273,8 @@ input::-webkit-input-placeholder {
 .van-actionsheet__name,
 .van-actionsheet__cancel {
     color: #333;
+}
+
+.van-toast--default {
+    text-align: center;
 }

@@ -94,7 +94,7 @@ const router = new Router({
           isLogin: false
         },
         component: resolve => require(["@/views/user/C2C_B2C"], resolve),
-      },{
+      }, {
         path: '/user/bibi',
         name: 'userbibi',
         meta: {
@@ -102,7 +102,7 @@ const router = new Router({
           isLogin: false
         },
         component: resolve => require(["@/views/user/BiBi"], resolve),
-      },{
+      }, {
         path: '/user/msgList',
         name: 'msgList',
         meta: {
@@ -110,7 +110,7 @@ const router = new Router({
           isLogin: false
         },
         component: resolve => require(["@/views/user/MsgList"], resolve),
-      },{
+      }, {
         path: '/user/msgDetails',
         name: 'msgDetails',
         meta: {
@@ -118,13 +118,149 @@ const router = new Router({
           isLogin: false
         },
         component: resolve => require(["@/views/user/MsgDetails"], resolve),
-      },{
+      }, {
+        path: '/user/msgInput',
+        name: 'msgInput',
+        meta: {
+          title: "留言反馈",
+          isLogin: false
+        },
+        component: resolve => require(["@/views/user/MsgInput"], resolve),
+      }, {
+        path: '/user/mailboxAuth',
+        name: 'mailboxAuth',
+        meta: {
+          title: "邮箱认证",
+          isLogin: false
+        },
+        component: resolve => require(["@/views/user/MailboxAuth"], resolve),
+      }, {
+        path: '/user/authentication',
+        name: 'authentication',
+        meta: {
+          title: "身份认证",
+          isLogin: false
+        },
+        component: resolve => require(["@/views/user/authentication/Index"], resolve),
+      }, {
+        path: '/user/authentication/idAuthOne',
+        name: 'idAuthOne',
+        meta: {
+          title: "身份证认证",
+          keepAlive: true,
+          isLogin: false
+        },
+        component: resolve => require(["@/views/user/authentication/idAuth/StepOne"], resolve),
+      }, {
+        path: '/user/authentication/idAuthTwo',
+        name: 'idAuthTwo',
+        meta: {
+          title: "身份证认证",
+          keepAlive: true,
+          isLogin: false
+        },
+        component: resolve => require(["@/views/user/authentication/idAuth/StepTwo"], resolve),
+      }, {
+        path: '/user/authentication/idAuthThere',
+        name: 'idAuthThere',
+        meta: {
+          title: "身份证认证",
+          keepAlive: true,
+          isLogin: false
+        },
+        component: resolve => require(["@/views/user/authentication/idAuth/StepThere"], resolve),
+      }, {
+        path: '/user/authentication/idAuthFour',
+        name: 'idAuthFour',
+        meta: {
+          title: "身份证认证",
+          keepAlive: true,
+          isLogin: false
+        },
+        component: resolve => require(["@/views/user/authentication/idAuth/StepFour"], resolve),
+      }, {
+        path: '/user/authentication/passportAuthOne',
+        name: 'passportAuthOne',
+        meta: {
+          title: "护照认证",
+          keepAlive: true,
+          isLogin: false
+        },
+        component: resolve => require(["@/views/user/authentication/passportAuth/StepOne"], resolve),
+      }, {
+        path: '/user/authentication/passportAuthTwo',
+        name: 'passportAuthTwo',
+        meta: {
+          title: "护照认证",
+          keepAlive: true,
+          isLogin: false
+        },
+        component: resolve => require(["@/views/user/authentication/passportAuth/StepTwo"], resolve),
+      }, {
+        path: '/user/authentication/passportAuthThere',
+        name: 'passportAuthThere',
+        meta: {
+          title: "护照认证",
+          keepAlive: true,
+          isLogin: false
+        },
+        component: resolve => require(["@/views/user/authentication/passportAuth/StepThere"], resolve),
+      }, {
         path: '/setting',
         name: 'setting',
         meta: {
           title: "设置"
         },
         component: resolve => require(["@/views/setting/Setting"], resolve),
+      }, {
+        path: '/setting/lang',
+        name: 'lang',
+        meta: {
+          title: "语言"
+        },
+        component: resolve => require(["@/views/setting/Lang"], resolve),
+      }, {
+        path: '/setting/legalCurrency',
+        name: 'legalCurrency',
+        meta: {
+          title: "法币"
+        },
+        component: resolve => require(["@/views/setting/LegalCurrency"], resolve),
+      }, {
+        path: '/setting/resetPwd',
+        name: 'resetPwd',
+        meta: {
+          title: "重置登录密码"
+        },
+        component: resolve => require(["@/views/setting/ResetPwd"], resolve),
+      }, {
+        path: '/setting/resetCapitalPwd',
+        name: 'resetCapitalPwd',
+        meta: {
+          title: "重置资金密码"
+        },
+        component: resolve => require(["@/views/setting/ResetCapitalPwd"], resolve),
+      }, {
+        path: '/setting/GesturePassword',
+        name: 'gesturePassword',
+        meta: {
+          title: "手势密码"
+        },
+        component: resolve => require(["@/views/setting/GesturePassword"], resolve),
+      }, {
+        path: '/setting/google',
+        name: 'google',
+        meta: {
+          title: "绑定谷歌验证器"
+        },
+        component: resolve => require(["@/views/setting/Google"], resolve),
+      }, {
+        path: '/setting/google/code',
+        name: 'google',
+        meta: {
+          title: "谷歌验证码"
+        },
+        component: resolve => require(["@/views/setting/GoogleCode"], resolve),
       }, {
         path: '/tradeRecord',
         name: 'tradeRecord',
@@ -159,7 +295,7 @@ Router.prototype.goBackPathName = function (pathName) {
 
 router.beforeEach((to, from, next) => {
   if (to.meta.isLogin && !Store.state.userInfo) {
-    next('/login');
+    next('/login?isBack=true');
   } else {
     next();
   }

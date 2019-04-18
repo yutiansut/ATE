@@ -3,7 +3,7 @@
         <Header back></Header>
         <div class="top">
             <div class="left">客户支持</div>
-            <div class="right">新增留言</div>
+            <div class="right" @click="$router.push('/user/msgInput')">新增留言</div>
         </div>
         <div class="top_menu">
             <span :class="{active:active==0}" @click="active=0">未解决</span>

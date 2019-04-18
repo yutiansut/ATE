@@ -30,13 +30,15 @@
         <div class="left">手机号码认证</div>
         <div class="right">1391***5678</div>
       </div>
-      <div class="list">
+      <div class="list" @click="isMailbox">
         <div class="left">邮箱认证</div>
-        <div class="right">167***@qq.com</div>
+        <!-- <div class="right">167***@qq.com</div> -->
+        <div class="right active">去认证 <i class="iconfont icon-right"></i></div>
       </div>
-      <div class="list">
+      <div class="list" @click="isId">
         <div class="left">身份认证</div>
-        <div class="right">已认证</div>
+        <!-- <div class="right">已认证</div> -->
+        <div class="right active">去认证 <i class="iconfont icon-right"></i></div>
       </div>
     </div>
 
@@ -64,6 +66,16 @@ export default {
   components: {},
   data() {
     return {};
+  },
+  methods: {
+    // 邮箱是否已认证
+    isMailbox() {
+      this.$router.push("/user/mailboxAuth");
+    },
+    // 身份是否已认证
+    isId() {
+      this.$router.push("/user/authentication");
+    }
   },
   created() {}
 };
@@ -155,9 +167,23 @@ export default {
 
     .right{
       color: @color999;
+      display: flex;
+      align-items: center;
+
+      &.active{
+        color: @activeColor;
+
+        i{
+          color: @activeColor;
+        }
+      }
+
     }
     div,.iconfont{
       font-size: 15px;
+    }
+    i{
+      color: @color999;
     }
   }
 }
