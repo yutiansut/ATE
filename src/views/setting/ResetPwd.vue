@@ -4,26 +4,60 @@
 
     <div class="form">
       <div class="list">
-        <input type="password" placeholder="原登录密码">
+        <input type="password" v-model="formData.password" placeholder="原登录密码">
       </div>
       <div class="list">
-        <input type="password" placeholder="重置密码">
+        <input type="password" v-model="formData.newPassword" placeholder="重置密码">
       </div>
       <div class="list">
-        <input type="password" placeholder="再次确认密码">
+        <input type="password" v-model="formData.newPassword2" placeholder="再次确认密码">
       </div>
 
-      <div class="submit">提交</div>
+      <div class="submit" @click="submit" :class="{active:isSubmitBtn}">提交</div>
     </div>
   </div>
 </template>
 
 <script>
+import { modifyPasswordApi } from "@/api";
+import { Toast } from "vant";
 export default {
-  data() {
-    return {};
+  computed: {
+    isSubmitBtn() {
+      if (
+        this.formData.password &&
+        this.formData.newPassword &&
+        this.formData.newPassword2
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   },
-  methods: {},
+  data() {
+    return {
+      formData: {
+        password: "",
+        newPassword: "",
+        newPassword2: ""
+      }
+    };
+  },
+  methods: {
+    submit() {
+      if (this.formData.password.length < 6) {
+        Toast("密码由6-22位数字大小写英文组成!");
+        return;
+      } else if (this.formData.newPassword != this.formData.newPassword2) {
+        Toast("两次密码输入不一致!");
+        return;
+      }
+      modifyPasswordApi(this.formData).then(data => {
+        this.$router.goBack();
+      });
+    }
+  },
   created() {}
 };
 </script>

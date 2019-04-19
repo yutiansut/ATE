@@ -4,29 +4,29 @@
     <div class="logo img"><img src="@/assets/images/logo.png" alt=""></div>
 
     <div class="form">
-      <div v-if="!isEmail" class="list tel" :class="{active:formData.account!=''}">
-        <input type="tel" v-model="formData.account" placeholder="手机号码">
+      <div v-if="!isEmail" class="list tel" :class="{active:formData.loginNum!=''}">
+        <input type="tel" v-model="formData.loginNum" placeholder="手机号码">
         <div class="qh" @click="$router.push('/telAreaCode')">+86<i class="iconfont icon-xia"></i></div>
       </div>
-      <div v-else class="list email" :class="{active:formData.account!=''}">
-        <input type="email" v-model="formData.account" placeholder="邮箱">
+      <div v-else class="list email" :class="{active:formData.loginNum!=''}">
+        <input type="email" v-model="formData.loginNum" placeholder="邮箱">
       </div>
-      <div class="list yzm" :class="{active:formData.account!=''}">
-        <input type="text" v-model="formData.account" placeholder="验证码">
+      <div class="list yzm" :class="{active:formData.code!=''}">
+        <input type="text" v-model="formData.code" placeholder="验证码">
         <div class="right_btn" @click="sendCode"><span>{{smsCodeConfig.text}}</span></div>
       </div>
-      <div class="list pwd" :class="{active:formData.pwd!='',show:showPwd}">
-        <input :type="showPwd?'text':'password'" v-model="formData.pwd" placeholder="重置密码">
+      <div class="list pwd" :class="{active:formData.password!='',show:showPwd}">
+        <input :type="showPwd?'text':'password'" v-model="formData.password" placeholder="登录密码">
         <div class="r_icon" @click="showPwd=!showPwd"></div>
       </div>
-      <div class="list pwd" :class="{active:formData.account!=''}">
-        <input type="text" v-model="formData.account" placeholder="邀请码（选填）">
+      <div class="list pwd" :class="{active:formData.inviterCode!=''}">
+        <input type="text" v-model="formData.inviterCode" placeholder="邀请码（选填）">
       </div>
 
-      <div class="submit" :class="{active:formData.account!='' && formData.pwd!=''}">注册</div>
+      <div class="submit" @click="submit" :class="{active:isRegisterBtn}">注册</div>
 
       <div class="bom">
-        <span @click="isEmail=!isEmail">使用{{useRegister}}</span>
+        <span @click="isEmail=!isEmail">使用{{useRegisterBtn}}</span>
       </div>
     </div>
   </div>
@@ -35,13 +35,32 @@
 <script>
 import { Toast } from "vant";
 import { setInterval, clearInterval } from "timers";
+import { sendCodeApi, sendEmailCodeApi, userRegisterApi } from "@/api";
 export default {
   computed: {
+    useRegisterBtn() {
+      if (this.isEmail) {
+        return "手机号码注册";
+      } else {
+        return "邮箱注册";
+      }
+    },
     useRegister() {
       if (this.isEmail) {
         return "邮箱注册";
       } else {
         return "手机号码注册";
+      }
+    },
+    isRegisterBtn() {
+      if (
+        this.formData.loginNum != "" &&
+        this.formData.password != "" &&
+        this.formData.code != ""
+      ) {
+        return true;
+      } else {
+        return false;
       }
     }
   },
@@ -57,24 +76,74 @@ export default {
         get: true
       },
       formData: {
-        account: "",
-        pwd: ""
+        loginNum: "",
+        password: "",
+        code: "",
+        inviterCode: ""
       }
     };
   },
   methods: {
+    // 注册
+    submit() {
+      if (!this.ruleAccount()) return;
+      userRegisterApi(this.formData).then(data => {
+        this.$router.goBack();
+      });
+    },
+    // 验证手机号
+    isPoneAvailable(phone) {
+      var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+      if (!myreg.test(phone)) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    // 验证邮箱
+    isEmailFn(str) {
+      if (str == null) return;
+      var reg = new RegExp(
+        /^([a-zA-Z0-9._-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/
+      );
+      return reg.test(str); //检测字符串是否符合正则表达式
+    },
+    // 验证
+    ruleAccount() {
+      if (this.isEmail && !this.isEmailFn(this.formData.loginNum)) {
+        Toast("请输入正确的邮箱号码");
+        return false;
+      } else if (
+        !this.isEmail &&
+        !this.isPoneAvailable(this.formData.loginNum)
+      ) {
+        // 判断手机号是否正确
+        Toast("请输入正确的手机号");
+        return false;
+      } else {
+        return true;
+      }
+    },
     //   发送验证码
     sendCode() {
-      // 判断手机号是否正确
-
+      console.log(this.ruleAccount());
+      if (!this.ruleAccount()) return;
       if (!this.smsCodeConfig.get) return;
-      // 记录获取验证码时间
-      this.smsCodeConfig.get = false;
-      localStorage[this.smsCodeConfig.storeName] = new Date().getTime();
-      this.countDown();
+      if (this.isEmail) {
+        sendEmailCodeApi({ email: this.formData.loginNum }).then(data => {
+          this.countDown();
+        });
+      } else {
+        sendCodeApi({ phone: this.formData.loginNum }).then(data => {
+          this.countDown();
+        });
+      }
     },
     // 倒计时
     countDown() {
+      // 记录获取验证码时间
+      this.smsCodeConfig.get = false;
+      localStorage[this.smsCodeConfig.storeName] = new Date().getTime();
       this.editText();
       this.smsCodeConfig.timer = setInterval(this.editText, 1000);
     },
@@ -104,7 +173,7 @@ export default {
     }
   },
   created() {
-    this.isSmsCodeTime();
+    // this.isSmsCodeTime();
   },
   watch: {
     isEmail() {

@@ -341,7 +341,7 @@ export default {
 .alert{
   position: fixed;
   top: 0;
-  z-index: 11000;
+  z-index: 1002;
   width: 84%;
   top: 50%;
   left: 8%;
@@ -567,7 +567,7 @@ export default {
 
 .fix_top{
   position: fixed;
-  z-index: 9999;
+  z-index: 1003;
   top: 50px;
   width: 100%;
 

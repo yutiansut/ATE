@@ -83,7 +83,7 @@ const router = new Router({
         name: 'user',
         meta: {
           title: "个人中心",
-          isLogin: false
+          isLogin: true
         },
         component: resolve => require(["@/views/user/User"], resolve),
       }, {
@@ -91,7 +91,7 @@ const router = new Router({
         name: 'userC2c_b2c',
         meta: {
           title: "C2C_B2C资产",
-          isLogin: false
+          isLogin: true
         },
         component: resolve => require(["@/views/user/C2C_B2C"], resolve),
       }, {
@@ -99,7 +99,7 @@ const router = new Router({
         name: 'userbibi',
         meta: {
           title: "币币资产",
-          isLogin: false
+          isLogin: true
         },
         component: resolve => require(["@/views/user/BiBi"], resolve),
       }, {
@@ -107,7 +107,7 @@ const router = new Router({
         name: 'msgList',
         meta: {
           title: "留言列表",
-          isLogin: false
+          isLogin: true
         },
         component: resolve => require(["@/views/user/MsgList"], resolve),
       }, {
@@ -115,7 +115,7 @@ const router = new Router({
         name: 'msgDetails',
         meta: {
           title: "留言反馈详情",
-          isLogin: false
+          isLogin: true
         },
         component: resolve => require(["@/views/user/MsgDetails"], resolve),
       }, {
@@ -123,7 +123,7 @@ const router = new Router({
         name: 'msgInput',
         meta: {
           title: "留言反馈",
-          isLogin: false
+          isLogin: true
         },
         component: resolve => require(["@/views/user/MsgInput"], resolve),
       }, {
@@ -131,7 +131,7 @@ const router = new Router({
         name: 'mailboxAuth',
         meta: {
           title: "邮箱认证",
-          isLogin: false
+          isLogin: true
         },
         component: resolve => require(["@/views/user/MailboxAuth"], resolve),
       }, {
@@ -139,7 +139,7 @@ const router = new Router({
         name: 'authentication',
         meta: {
           title: "身份认证",
-          isLogin: false
+          isLogin: true
         },
         component: resolve => require(["@/views/user/authentication/Index"], resolve),
       }, {
@@ -148,7 +148,7 @@ const router = new Router({
         meta: {
           title: "身份证认证",
           keepAlive: true,
-          isLogin: false
+          isLogin: true
         },
         component: resolve => require(["@/views/user/authentication/idAuth/StepOne"], resolve),
       }, {
@@ -157,7 +157,7 @@ const router = new Router({
         meta: {
           title: "身份证认证",
           keepAlive: true,
-          isLogin: false
+          isLogin: true
         },
         component: resolve => require(["@/views/user/authentication/idAuth/StepTwo"], resolve),
       }, {
@@ -166,7 +166,7 @@ const router = new Router({
         meta: {
           title: "身份证认证",
           keepAlive: true,
-          isLogin: false
+          isLogin: true
         },
         component: resolve => require(["@/views/user/authentication/idAuth/StepThere"], resolve),
       }, {
@@ -175,7 +175,7 @@ const router = new Router({
         meta: {
           title: "身份证认证",
           keepAlive: true,
-          isLogin: false
+          isLogin: true
         },
         component: resolve => require(["@/views/user/authentication/idAuth/StepFour"], resolve),
       }, {
@@ -184,7 +184,7 @@ const router = new Router({
         meta: {
           title: "护照认证",
           keepAlive: true,
-          isLogin: false
+          isLogin: true
         },
         component: resolve => require(["@/views/user/authentication/passportAuth/StepOne"], resolve),
       }, {
@@ -193,7 +193,7 @@ const router = new Router({
         meta: {
           title: "护照认证",
           keepAlive: true,
-          isLogin: false
+          isLogin: true
         },
         component: resolve => require(["@/views/user/authentication/passportAuth/StepTwo"], resolve),
       }, {
@@ -202,7 +202,7 @@ const router = new Router({
         meta: {
           title: "护照认证",
           keepAlive: true,
-          isLogin: false
+          isLogin: true
         },
         component: resolve => require(["@/views/user/authentication/passportAuth/StepThere"], resolve),
       }, {
@@ -294,7 +294,8 @@ Router.prototype.goBackPathName = function (pathName) {
 };
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.isLogin && !Store.state.userInfo) {
+  let token = Store.state.token || localStorage.token;
+  if (to.meta.isLogin && !token) {
     next('/login?isBack=true');
   } else {
     next();

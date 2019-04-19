@@ -4,15 +4,15 @@
     <div class="logo img"><img src="@/assets/images/logo.png" alt=""></div>
 
     <div class="form">
-      <div class="list" :class="{active:formData.account!=''}">
-        <input type="text" v-model="formData.account" placeholder="邮箱或手机号码">
+      <div class="list" :class="{active:formData.loginNum!=''}">
+        <input type="text" v-model="formData.loginNum" placeholder="邮箱或手机号码">
       </div>
-      <div class="list" :class="{active:formData.pwd!='',show:showPwd}">
-        <input :type="showPwd?'text':'password'" v-model="formData.pwd" placeholder="密码">
+      <div class="list" :class="{active:formData.password!='',show:showPwd}">
+        <input :type="showPwd?'text':'password'" v-model="formData.password" placeholder="密码">
         <div class="r_icon" @click="showPwd=!showPwd"></div>
       </div>
 
-      <div class="submit" @click="submit" :class="{active:formData.account!='' && formData.pwd!=''}">登录</div>
+      <div class="submit" @click="submit" :class="{active:isLoginBtn}">登录</div>
 
       <div class="bom">
         <router-link to="/forgetPassword">忘记密码</router-link>
@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div class="mask" v-show="alertYzm" @click="alertYzm=false"></div>
+    <!-- <div class="mask" v-show="alertYzm" @click="alertYzm=false"></div>
     <transition name="slide-fade">
       <div class="alert" v-show="alertYzm">
         <div class="alert_tl">进行二次安全验证 <i @click="alertYzm=false" class="iconfont icon-guanbi"></i></div>
@@ -33,12 +33,25 @@
           <div class="alert_submit" @click="login" :class="{active:formData.yzm.length>3}">提交</div>
         </div>
       </div>
-    </transition>
+    </transition> -->
   </div>
 </template>
 
 <script>
+import { loginApi } from "@/api";
 export default {
+  computed: {
+    isLoginBtn() {
+      if (
+        this.formData.loginNum.length > 3 &&
+        this.formData.password.length >= 6
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  },
   data() {
     return {
       showPwd: false,
@@ -51,9 +64,8 @@ export default {
         get: true
       },
       formData: {
-        account: "",
-        pwd: "",
-        yzm: ""
+        loginNum: "13912345678",
+        password: "zou123456"
       }
     };
   },
@@ -99,7 +111,13 @@ export default {
     },
     // 提交账号密码
     submit() {
-      this.alertYzm = true;
+      loginApi(this.formData).then(data => {
+        localStorage.userInfo = JSON.stringify(data);
+        localStorage.token = data.token;
+        this.$store.commit("setUserInfo", data);
+        this.login();
+      });
+      // this.alertYzm = true;
     },
     // 登录
     login() {
@@ -183,10 +201,6 @@ export default {
                     }
                 }
             }
-            
-
-
-            
         }
     }
 
@@ -212,7 +226,7 @@ export default {
 .alert{
   position: fixed;
   top: 0;
-  z-index: 11000;
+  z-index: 1002;
   width: 84%;
   top: 50%;
   left: 8%;

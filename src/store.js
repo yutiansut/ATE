@@ -22,6 +22,10 @@ export default new Vuex.Store({
     setLang(state, lang) {
       localStorage.lang = lang;
       state.lang = lang;
+    },
+    setUserInfo(state, userInfo) {
+      state.userInfo = userInfo;
+      state.token = userInfo.token;
     }
   },
   actions: {}

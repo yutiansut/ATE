@@ -12,58 +12,6 @@
                     <span>中国</span>
                     +86
                 </li>
-                <li @click="onSetTelAreaCode('+355')">
-                    <span>阿尔巴尼亚</span>
-                    +355
-                </li>
-                <li @click="onSetTelAreaCode('+86')">
-                    <span>中国</span>
-                    +86
-                </li>
-                <li @click="onSetTelAreaCode('+355')">
-                    <span>阿尔巴尼亚</span>
-                    +355
-                </li>
-                <li @click="onSetTelAreaCode('+86')">
-                    <span>中国</span>
-                    +86
-                </li>
-                <li @click="onSetTelAreaCode('+355')">
-                    <span>阿尔巴尼亚</span>
-                    +355
-                </li>
-                <li @click="onSetTelAreaCode('+86')">
-                    <span>中国</span>
-                    +86
-                </li>
-                <li @click="onSetTelAreaCode('+355')">
-                    <span>阿尔巴尼亚</span>
-                    +355
-                </li>
-                <li @click="onSetTelAreaCode('+86')">
-                    <span>中国</span>
-                    +86
-                </li>
-                <li @click="onSetTelAreaCode('+355')">
-                    <span>阿尔巴尼亚</span>
-                    +355
-                </li>
-                <li @click="onSetTelAreaCode('+86')">
-                    <span>中国</span>
-                    +86
-                </li>
-                <li @click="onSetTelAreaCode('+355')">
-                    <span>阿尔巴尼亚</span>
-                    +355
-                </li>
-                <li @click="onSetTelAreaCode('+86')">
-                    <span>中国</span>
-                    +86
-                </li>
-                <li @click="onSetTelAreaCode('+355')">
-                    <span>阿尔巴尼亚</span>
-                    +355
-                </li>
             </ul>
         </div>
     </div>
