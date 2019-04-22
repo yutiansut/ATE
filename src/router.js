@@ -31,7 +31,7 @@ const router = new Router({
         name: 'forgetPassword',
         meta: {
           title: "忘记密码",
-          keepAlive: true
+          keepAlive: false
         },
         component: resolve => require(["@/views/forgetPassword/ForgetPassword"], resolve),
       }, {
@@ -94,6 +94,38 @@ const router = new Router({
           isLogin: true
         },
         component: resolve => require(["@/views/user/C2C_B2C"], resolve),
+      }, {
+        path: '/user/c2c_b2c/coinCharging',
+        name: 'coinCharging',
+        meta: {
+          title: "BTC充币",
+          isLogin: true
+        },
+        component: resolve => require(["@/views/user/CoinCharging"], resolve),
+      }, {
+        path: '/user/c2c_b2c/capitalTransfer',
+        name: 'capitalTransfer',
+        meta: {
+          title: "资金划转",
+          isLogin: true
+        },
+        component: resolve => require(["@/views/user/CapitalTransfer"], resolve),
+      }, {
+        path: '/user/c2c_b2c/fundTransfer',
+        name: 'fundTransfer',
+        meta: {
+          title: "资金转移",
+          isLogin: true
+        },
+        component: resolve => require(["@/views/user/FundTransfer"], resolve),
+      }, {
+        path: '/user/c2c_b2c/btcMention',
+        name: 'btcMention',
+        meta: {
+          title: "BTC提币",
+          isLogin: true
+        },
+        component: resolve => require(["@/views/user/BtcMention"], resolve),
       }, {
         path: '/user/bibi',
         name: 'userbibi',
@@ -275,7 +307,28 @@ const router = new Router({
           title: "发布广告"
         },
         component: resolve => require(["@/views/advertisement/Release"], resolve),
-      }]
+      }, {
+        path: '/bankCard',
+        name: 'bankCard',
+        meta: {
+          title: "银行卡"
+        },
+        component: resolve => require(["@/views/account/BankCard"], resolve),
+      }, {
+        path: '/alipay',
+        name: 'alipay',
+        meta: {
+          title: "支付宝"
+        },
+        component: resolve => require(["@/views/account/Alipay"], resolve),
+      }, {
+        path: '/weChat',
+        name: 'weChat',
+        meta: {
+          title: "微信"
+        },
+        component: resolve => require(["@/views/account/WeChat"], resolve),
+      },]
     }
   ]
 });

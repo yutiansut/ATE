@@ -34,9 +34,9 @@
                 </div>
             </div>
             <div class="btn_group">
-                <div class="btn">充币</div>
-                <div class="btn">C2C/B2C</div>
-                <div class="btn">资金划转</div>
+                <div class="btn" @click="$router.push('/user/c2c_b2c/coinCharging')">充币</div>
+                <div class="btn" @click="$router.push('/c2c_b2c')">C2C/B2C</div>
+                <div class="btn" @click="$router.push('/user/c2c_b2c/capitalTransfer')">资金划转</div>
             </div>
         </div>
     </div>

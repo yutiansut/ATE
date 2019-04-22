@@ -24,21 +24,21 @@
                     <div class="checkbox"></div>
                     银行卡
                 </div>
-                <div class="right">前往添加银行卡账号 <i class="iconfont icon-right"></i></div>
+                <div class="right" @click="$router.push('/bankCard')">前往添加银行卡账号 <i class="iconfont icon-right"></i></div>
             </div>
             <div class="r_tl">
                 <div class="left">
                     <div class="checkbox"></div>
                     支付宝
                 </div>
-                <div class="right">前往添加支付宝账号 <i class="iconfont icon-right"></i></div>
+                <div class="right" @click="$router.push('/alipay')">前往添加支付宝账号 <i class="iconfont icon-right"></i></div>
             </div>
             <div class="r_tl">
                 <div class="left">
                     <div class="checkbox"></div>
                     微信
                 </div>
-                <div class="right">前往添加微信账号 <i class="iconfont icon-right"></i></div>
+                <div class="right" @click="$router.push('/weChat')">前往添加微信账号 <i class="iconfont icon-right"></i></div>
             </div>
         </div>
 

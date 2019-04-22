@@ -4,7 +4,7 @@
         <div class="tips">切记！请妥善备份并保管好秘钥！以防丢失</div>
 
         <div class="box">
-            <div class="pwd">秘钥：403KV4SAWN3XUK3W <div class="btn">复制</div>
+            <div class="pwd">秘钥：{{code}} <div class="btn" @click="copy(code)">复制</div>
             </div>
             <div class="img"><img src="./1555579914.png" alt=""></div>
             <div class="tips_group">
@@ -18,7 +18,25 @@
 </template>
 
 <script>
-export default {};
+import { Toast } from "vant";
+export default {
+  data() {
+    return {
+      code: "403KV4SAWN3XUK3W"
+    };
+  },
+  methods: {
+    copy(str) {
+      var save = function(e) {
+        e.clipboardData.setData("text/plain", str); //下面会说到clipboardData对象
+        e.preventDefault(); //阻止默认行为
+      };
+      document.addEventListener("copy", save);
+      document.execCommand("copy"); //使文档处于可编辑状态，否则无效
+      Toast("复制成功");
+    }
+  }
+};
 </script>
 <style lang="less" scoped>
 .rel{

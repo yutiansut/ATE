@@ -9,6 +9,10 @@ import 'lib-flexible';
 // 多语言
 import i18n from './lang/index';
 
+import { Dialog } from 'vant';
+
+Vue.use(Dialog);
+
 
 
 // 全局组件-Header
