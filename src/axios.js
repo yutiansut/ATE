@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import store from '@/store';
-import Router from 'vue-router';
+import Router from './router';
 import Axios from 'axios';
 import Config from './config';
-import { Toast } from 'vant';
+import { Toast, Dialog } from 'vant';
 const baseURL = Config.baseURL + '/api';
 const headers = {
     "Content-Type": "application/json"
@@ -13,6 +13,7 @@ const headers = {
 Axios.interceptors.request.use(config => {
     let token = store.state.token || localStorage.token;
     config.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+    config.headers['language'] = 1;
     if (token != null) {
         config.headers['token'] = token;
     }
@@ -24,6 +25,9 @@ Axios.interceptors.request.use(config => {
 
 // request拦截器--响应处理
 Axios.interceptors.response.use(response => {
+    // Dialog.alert({
+    //     message: "<p style='color:#333'>" + JSON.stringify(response) + "</p>"
+    // })
     return response;
 }, err => {
     //请求出错，根据返回状态码判断出错原因
@@ -53,8 +57,7 @@ export default (params = {}) => {
                 resolve(data.data.data);
             } else {
                 Toast.fail(data.data.msg)
-
-                if (this.data.data.code == 208) {
+                if (data.data.code == 208 || data.data.code == 224) {
                     Router.push({ path: '/login', query: { isBack: true } })
                 }
                 reject(data.data);

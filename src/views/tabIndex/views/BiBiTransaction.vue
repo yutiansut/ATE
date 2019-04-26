@@ -1,32 +1,35 @@
 <template>
   <div class="rel">
     <Header></Header>
+    <div class="mask" style="z-index:99;" @click="selectActive=false" v-show="selectActive"></div>
     <div class="top">
-      <div class="select_group" @click="selectActive=!selectActive">
-        NZ/USDT <i :class="{'icon-shang':selectActive}" class="iconfont icon-xia"></i>
+      <div class="select_group" @click="selectActive=!selectActive" v-if="topSelectArr.length>0">
+        {{privatesName}}/{{mainName}} <i :class="{'icon-shang':selectActive}" class="iconfont icon-xia"></i>
 
         <transition name="slide-fade">
-          <div class="select_box" v-show="selectActive">
-            <div class="list active">1BTC/HKDT</div>
-            <div class="list">BTC/HKDT</div>
-            <div class="list">BTC/HKDT</div>
-            <div class="list">BTC/HKDT</div>
+          <div class="select_box nobox" v-show="selectActive">
+            <div class="stb">
+              <span @click.stop="onTabSelectTop(index)" :class="{active:topTabIndex==index}" v-for="(item,index) in topSelectArr" :key="index">{{item.main[0]}}</span>
+            </div>
+            <div class="sbx" v-if="topSelectArr.length>0">
+              <div @click.stop="onSelectTop(index)" class="list" :class="{active:topTabIndexCm==index}" v-for="(item,index) in topSelectArr[topTabIndex].privates" :key="index">{{item}}</div>
+            </div>
           </div>
         </transition>
       </div>
       <div class="right">
         <div class="left">
-          <span>0.01088121</span>
-          <span>67.5650HKDT</span>
+          <span>{{surfaceData.newPrice}}</span>
+          <!-- <span>67.5650HKDT</span> -->
         </div>
-        <div class="bil">+8.88%</div>
+        <div class="bil">{{surfaceData.gains>0?'+':''}}{{surfaceData.gains}}%</div>
       </div>
     </div>
     <div class="menu">
       <span @click="active=0" :class="{active:active==0}">买入</span>
       <span @click="active=1" :class="{active:active==1}">卖出</span>
-      <span @click="onLove">自选 <i :class="{active:love}" class="iconx"></i></span>
-      <span>K线图 <i class="iconfont icon-right"></i></span>
+      <span @click="onLove">自选 <i :class="{active:isSelfSelected}" class="iconx"></i></span>
+      <span @click="$router.push({path:'/klinechat',query:{symbol:privatesName,market:mainName}})">K线图 <i class="iconfont icon-right"></i></span>
     </div>
 
     <div class="box">
@@ -36,24 +39,27 @@
         </div>
         <div class="pmxd">
           <div class="jbq" v-if="buyConfig.value==0">
-            <div class="min" @click="onMin('value')">-</div>
-            <div class="input"><input type="text" v-model="value" placeholder="价格"></div>
-            <div class="puls" @click="onPuls('value')">+</div>
+            <div class="min" @click="onMin('buyAjax','price')">-</div>
+            <div class="input"><input type="text" @input="onBuyPrice" v-model="buyAjax.price" placeholder="价格"></div>
+            <div class="puls" @click="onPuls('buyAjax','price')">+</div>
           </div>
           <div class="disabled" v-else>以当前市场价格交易</div>
-          <div class="jbq_tips">≈﹣﹣HKDT</div>
+          <!-- <div class="jbq_tips">≈﹣﹣HKDT</div> -->
           <div class="jbq">
-            <div class="min" @click="onMin('value')">-</div>
-            <div class="input"><input type="text" v-model="value" placeholder="数量"></div>
-            <div class="puls" @click="onPuls('value')">+</div>
+            <div class="min" @click="onMin('buyAjax','volume')">-</div>
+            <div class="input"><input type="text" @input="onNumBfb('buyAjax')" v-model="buyAjax.volume" placeholder="数量"></div>
+            <div class="puls" @click="onPuls('buyAjax','volume')">+</div>
           </div>
           <div class="huakua">
-            <div class="pmx">可用USDT:0.00000000</div>
-            <van-slider v-model="value2" class="bmxxs" />
-            <div class="val">0</div>
+            <div class="pmx" v-if="topSelectArr.length>0">可用{{mainName}}:{{mainData.availableBalance}}</div>
+            <van-slider v-model="buyAjax.bfb" @input="onAjaxBfb('buyAjax')" class="bmxxs" />
+            <div class="val">
+              <span>0</span>
+              <span v-if="privatesData.availableBalance">{{mainData.availableBalance/(buyAjax.price || 1)}}{{buyConfig.value==0?privatesName:mainName}}</span>
+            </div>
           </div>
-          <div class="price">交易额：--</div>
-          <div class="btn">买入</div>
+          <div class="price" v-if="buyConfig.value==0">交易额：{{buyAjax.volume*buyAjax.price}}{{mainName}}</div>
+          <div class="btn" @click="addBuyEntrustment">买入</div>
         </div>
       </div>
       <div class="left sell" v-else>
@@ -62,24 +68,27 @@
         </div>
         <div class="pmxd">
           <div class="jbq" v-if="sellConfig.value==0">
-            <div class="min" @click="onMin('value')">-</div>
-            <div class="input"><input type="text" v-model="value" placeholder="价格"></div>
-            <div class="puls" @click="onPuls('value')">+</div>
+            <div class="min" @click="onMin('sellAjax','price')">-</div>
+            <div class="input"><input type="text" @input="onSellPrice" v-model="sellAjax.price" placeholder="价格"></div>
+            <div class="puls" @click="onPuls('sellAjax','price')">+</div>
           </div>
           <div class="disabled" v-else>以当前市场价格交易</div>
-          <div class="jbq_tips">≈﹣﹣HKDT</div>
+          <!-- <div class="jbq_tips">≈﹣﹣HKDT</div> -->
           <div class="jbq">
-            <div class="min" @click="onMin('value')">-</div>
-            <div class="input"><input type="text" v-model="value" placeholder="数量"></div>
-            <div class="puls" @click="onPuls('value')">+</div>
+            <div class="min" @click="onMin('sellAjax','volume')">-</div>
+            <div class="input"><input type="text" @input="onNumBfb('sellAjax')" v-model="sellAjax.volume" placeholder="数量"></div>
+            <div class="puls" @click="onPuls('sellAjax','volume')">+</div>
           </div>
           <div class="huakua">
-            <div class="pmx">可用USDT:0.00000000</div>
-            <van-slider v-model="value2" class="bmxxs" />
-            <div class="val">0</div>
+            <div class="pmx" v-if="topSelectArr.length>0">可用{{mainName}}:{{mainData.availableBalance}}</div>
+            <van-slider v-model="sellAjax.bfb" @input="onAjaxBfb('sellAjax')" class="bmxxs" />
+            <div class="val">
+              <span>0</span>
+              <span v-if="privatesData.availableBalance">{{mainData.availableBalance/(sellAjax.price || 1)}}{{sellConfig.value==0?privatesName:mainName}}</span>
+            </div>
           </div>
-          <div class="price">交易额：--</div>
-          <div class="btn">买入</div>
+          <div class="price" v-if="sellConfig.value==0">交易额：{{sellAjax.volume*sellAjax.price}}{{mainName}}</div>
+          <div class="btn" @click="addSellEntrustment">卖出</div>
         </div>
       </div>
       <div class="right">
@@ -88,39 +97,15 @@
             <span>价格(USDT)</span>
             <span>数量(NZ)</span>
           </div>
-          <div class="lb">
-            <span>--</span>
-            <span>--</span>
-          </div>
-          <div class="lb">
-            <span>--</span>
-            <span>--</span>
-          </div>
-          <div class="lb">
-            <span>--</span>
-            <span>--</span>
-          </div>
-          <div class="lb">
-            <span>--</span>
-            <span>--</span>
+          <div class="lb" @click="onCoyPrice(item)" v-for="(item,index) in unsettledGearData.sell" :key="index">
+            <span>{{item.price}}</span>
+            <span>{{item.val}}</span>
           </div>
         </div>
         <div class="bom">
-          <div class="lb">
-            <span>--</span>
-            <span>--</span>
-          </div>
-          <div class="lb">
-            <span>--</span>
-            <span>--</span>
-          </div>
-          <div class="lb">
-            <span>--</span>
-            <span>--</span>
-          </div>
-          <div class="lb">
-            <span>--</span>
-            <span>--</span>
+          <div class="lb" @click="onCoyPrice(item)" v-for="(item,index) in unsettledGearData.buy" :key="index">
+            <span>{{item.price}}</span>
+            <span>{{item.val}}</span>
           </div>
         </div>
       </div>
@@ -128,27 +113,25 @@
 
     <div class="dqbo">
       <div class="left">当前委托</div>
-      <div class="right">历史记录 <i class="iconfont icon-right"></i></div>
+      <div class="right" @click="$router.push({path:'/historicalRecord'})">历史记录 <i class="iconfont icon-right"></i></div>
     </div>
 
     <div class="bibi_box trade_box">
-      <div class="list" v-for="(item,index) in 10" :key="index">
-        <div class="top">
-          <span>ETH/BTC</span>
-          <span>买入</span>
-          <span class="btn"><em @click="cancelOrder(item)">撤单</em></span>
-        </div>
+      <div class="list" v-for="(item,index) in myEntrustmentsData" :key="index">
         <div class="time">
           <div class="lx_mx">
-            <span>11:17 04/08</span>
+            <span>委托中</span>
+            <span>{{item.createDate}}</span>
             <span>时间</span>
           </div>
           <div class="lx_mx">
-            <span>0.00310000000</span>
+            <span :class="{buysell:item.buysell==1,sellbuy:item.buysell!=1}">{{item.buysell==1?"买入":"卖出"}}</span>
+            <span>{{item.price}}</span>
             <span>委托价(BTC)</span>
           </div>
           <div class="lx_mx">
-            <span>2.00000000</span>
+            <span class="btn"><em @click="cancelOrder(item)">撤单</em></span>
+            <span>{{item.volume}}</span>
             <span>委托量(ETH)</span>
           </div>
         </div>
@@ -162,11 +145,50 @@
 
 <script>
 import { Stepper, Slider, Dialog, Actionsheet } from "vant";
+import {
+  getCurrencysubchail,
+  addEntrustment,
+  getCoinFundsInfo,
+  surface,
+  myEntrustments,
+  updateEntrustment,
+  getMinVolume,
+  addSelfSelected,
+  delSelfSelected,
+  selfSelected,
+  unsettledGear
+} from "@/api";
 export default {
   components: {
     [Stepper.name]: Stepper,
     [Slider.name]: Slider,
     [Actionsheet.name]: Actionsheet
+  },
+  computed: {
+    // 主链名称
+    mainName() {
+      return this.topSelectArr.length > 0
+        ? this.topSelectArr[this.topTabIndexSm].main[0]
+        : "";
+    },
+    // 次链名称
+    privatesName() {
+      return this.topSelectArr.length > 0
+        ? this.topSelectArr[this.topTabIndexSm].privates[this.topTabIndexCm]
+        : "";
+    },
+    // 是否自选
+    isSelfSelected() {
+      let isBol = false;
+      for (let i = 0; i < this.selfSelectedData.length; i++) {
+        let item = this.selfSelectedData[i];
+        if (item.market == this.mainName && item.symbol == this.privatesName) {
+          isBol = true;
+          break;
+        }
+      }
+      return isBol;
+    }
   },
   data() {
     return {
@@ -174,12 +196,12 @@ export default {
       selectActive: false,
       buyConfig: {
         show: false,
-        value: 0,
+        value: "",
         text: "限价买入"
       },
       sellConfig: {
         show: false,
-        value: 0,
+        value: "",
         text: "限价卖出"
       },
       buyActions: [
@@ -204,32 +226,91 @@ export default {
       ],
       value: "",
       value2: 0,
-      love: false
+      love: false,
+      topSelectArr: [],
+      topTabIndex: 0,
+      topTabIndexSm: 0,
+      topTabIndexCm: 0,
+      // 买入参数
+      buyAjax: {
+        type: 2,
+        buysell: 1,
+        market: "",
+        symbol: "",
+        price: 0,
+        volume: 0,
+        amount: 0,
+        bfb: 0
+      },
+      // 卖出参数
+      sellAjax: {
+        type: 2,
+        buysell: 2,
+        market: "",
+        symbol: "",
+        price: 0,
+        volume: 0,
+        amount: 0,
+        bfb: 0
+      },
+      mainData: {},
+      privatesData: {},
+      surfaceData: {},
+      myEntrustmentsData: [],
+      selfSelectedData: [],
+      unsettledGearData: { buy: [], sell: [] }
     };
   },
   methods: {
+    // 改变买入和卖出价格
+    onCoyPrice(item) {
+      this.buyAjax.price = item.price;
+      this.sellAjax.price = item.price;
+    },
+    // 买入价格改变计算购买数量
+    onBuyPrice() {
+      this.onAjaxBfb("buyAjax");
+    },
+    // 卖出价格改变计算购买数量
+    onSellPrice() {
+      this.onAjaxBfb("sellAjax");
+    },
+    // 百分百触发
+    onAjaxBfb(key) {
+      let price = this[key].price == 0 ? 1 : this[key].price;
+      this[key].volume =
+        (this.mainData.availableBalance / price) * (this[key].bfb / 100);
+    },
+    // 通过数量计算百分比
+    onNumBfb(key) {
+      let price = this[key].price == 0 ? 1 : this[key].price;
+      this[key].bfb =
+        (this[key].volume / (this.mainData.availableBalance / price)) * 100;
+      // this.onAjaxBfb(key);
+    },
     // 减
-    onMin(key) {
-      if (this[key] > 0) {
-        this[key]--;
+    onMin(key, key2) {
+      if (this[key][key2] > 0) {
+        this[key][key2] -= 0.01;
       }
+      this.onAjaxBfb(key);
     },
     // 加
-    onPuls(key) {
-      this[key]++;
-    },
-    // 收藏
-    onLove() {
-      this.love = !this.love;
+    onPuls(key, key2) {
+      this[key][key2] = parseFloat(this[key][key2]) + 0.01;
+      if (key2 == "price") {
+        this.onAjaxBfb(key);
+      }
     },
     //   撤单
-    cancelOrder() {
+    cancelOrder(item) {
       Dialog.confirm({
         title: "撤销订单",
         message: "是否确认撤销该订单"
       })
         .then(() => {
           // on confirm
+          updateEntrustment({ id: item.id, status: 5 }).then(data => {});
         })
         .catch(() => {
           // on cancel
@@ -238,6 +319,7 @@ export default {
     // 买入选择弹窗
     onBuySelect(item) {
       // 点击选项时默认不会关闭菜单，可以手动关闭
+      this.buyAjax.price = 0;
       this.buyConfig.text = item.name;
       this.buyConfig.value = item.value;
       this.buyConfig.show = false;
@@ -245,10 +327,169 @@ export default {
     // 卖出选择弹窗
     onSellSelect(item) {
       // 点击选项时默认不会关闭菜单，可以手动关闭
+      this.sellAjax.price = 0;
       this.sellConfig.text = item.name;
       this.sellConfig.value = item.value;
       this.sellConfig.show = false;
+    },
+    // 获取类型选项
+    getCurrencysubchail() {
+      getCurrencysubchail().then(data => {
+        this.topSelectArr = data;
+        this.getCoinFundsInfo();
+        this.myEntrustments();
+        this.unsettledGear();
+      });
+    },
+    // 类型tab选择
+    onTabSelectTop(index) {
+      this.topTabIndex = index;
+    },
+    // 类型选项
+    onSelectTop(index) {
+      this.topTabIndexSm = this.topTabIndex;
+      this.topTabIndexCm = index;
+
+      this.getCoinFundsInfo();
+
+      this.selectActive = false;
+    },
+    // 获取类型余额
+    getCoinFundsInfo() {
+      // 主余额
+      getCoinFundsInfo({
+        tradeCode: this.topSelectArr[this.topTabIndexSm].main[0]
+      }).then(data => {
+        console.log(data);
+        this.mainData = data;
+
+        // 子余额
+        getCoinFundsInfo({
+          tradeCode: this.topSelectArr[this.topTabIndexSm].privates[
+            this.topTabIndexCm
+          ]
+        }).then(data => {
+          console.log(data);
+          this.privatesData = data;
+          this.surface();
+        });
+      });
+    },
+    // 买入
+    addBuyEntrustment() {
+      this.buyAjax.market = this.topSelectArr[this.topTabIndexSm].main[0];
+      this.buyAjax.symbol = this.topSelectArr[this.topTabIndexSm].privates[
+        this.topTabIndexCm
+      ];
+      this.buyAjax.type = this.buyConfig.value == 1 ? 1 : 2;
+      if (this.buyConfig.value == 1) {
+        this.buyAjax.type = 1;
+        this.buyAjax.price = this.surfaceData.newPrice;
+      }
+      this.buyAjax.amount = this.buyAjax.volume * this.buyAjax.price;
+      addEntrustment(this.buyAjax).then(data => {
+        this.getCoinFundsInfo();
+        this.myEntrustments();
+      });
+    },
+    // 卖出
+    addSellEntrustment() {
+      this.sellAjax.market = this.topSelectArr[this.topTabIndexSm].main[0];
+      this.sellAjax.symbol = this.topSelectArr[this.topTabIndexSm].privates[
+        this.topTabIndexCm
+      ];
+      this.sellAjax.type = this.sellConfig.value == 1 ? 1 : 2;
+      if (this.sellConfig.value == 1) {
+        this.sellAjax.type = 1;
+        this.sellAjax.price = this.surfaceData.newPrice;
+      }
+      this.sellAjax.amount = this.sellAjax.volume * this.sellAjax.price;
+      addEntrustment(this.sellAjax).then(data => {
+        this.getCoinFundsInfo();
+        this.myEntrustments();
+      });
+    },
+    // 获取盘面
+    surface() {
+      surface({
+        transPares: [this.mainName + ":" + this.privatesName]
+      }).then(data => {
+        this.surfaceData = data[0];
+      });
+    },
+    // 获取最小购买量
+    getMinVolume() {
+      getMinVolume().then(data => {
+        console.log(1111);
+        console.log(data);
+      });
+    },
+    // 委托记录
+    myEntrustments() {
+      myEntrustments({
+        market: this.topSelectArr[this.topTabIndexSm].main[0],
+        symbol: this.topSelectArr[this.topTabIndexSm].privates[
+          this.topTabIndexCm
+        ]
+      }).then(data => {
+        console.log("委托记录：");
+        console.log(data);
+        this.myEntrustmentsData = data;
+      });
+    },
+    // 加入自选
+    addSelfSelected() {
+      addSelfSelected({
+        transPare: this.privatesName + ":" + this.mainName
+      }).then(data => {
+        this.selfSelected();
+      });
+    },
+    // 取消自选
+    delSelfSelected() {
+      delSelfSelected({
+        transPare: this.privatesName + ":" + this.mainName
+      }).then(data => {
+        this.selfSelected();
+      });
+    },
+    // 查询自选列表
+    selfSelected() {
+      selfSelected().then(data => {
+        console.log("自选列表：");
+        console.log(data);
+        this.selfSelectedData = data;
+      });
+    },
+    // 加入或取消自选
+    onLove() {
+      // 加入
+      if (this.isSelfSelected) {
+        this.delSelfSelected();
+      } else {
+        // 取消
+        this.addSelfSelected();
+      }
+    },
+    // 五档数据
+    unsettledGear() {
+      unsettledGear({
+        tradeCode: this.mainName + ":" + this.privatesName,
+        gearNum: 5
+      }).then(data => {
+        console.log("五档数据：");
+        console.log(data);
+        this.unsettledGearData = data;
+        this.unsettledGearData.sell.sort((a, b) => {
+          return b.price - a.price;
+        });
+      });
     }
+  },
+  created() {
+    this.getCurrencysubchail();
+    this.getMinVolume();
+    this.selfSelected();
   }
 };
 </script>
@@ -283,14 +524,16 @@ export default {
 
     .left{
       padding-left: 26px;
+      display: flex;
+      align-items: center;
       span{
         display: block;
 
-        &:last-child{
-          font-size: 12px;
-          color: @color999;
-          margin-top: 2px;
-        }
+        // &:last-child{
+        //   font-size: 12px;
+        //   color: @color999;
+        //   margin-top: 2px;
+        // }
       }
     }
     .bil{
@@ -350,6 +593,7 @@ export default {
   display: flex;
   background: @bgColor;
   position: relative;
+  padding-bottom: 20px;
   &:after{
     content: "";
     display: block;
@@ -395,20 +639,27 @@ export default {
       .pmx{
         margin: 9px 0 10px;
         color: @color999;
+        font-size: 12px;
       }
       .bmxxs{
         margin: 10px 0;
       }
 
       .val{
-        color: @color999;
         margin-top: 13px;
         margin-bottom: 5px;
+        display: flex;
+        justify-content:space-between;
+        span{
+          color: @color999;
+          font-size: 12px;
+        }
       }
     }
 
     .price{
       color: @color999;
+      font-size: 12px;
     }
 
     .btn{
@@ -447,7 +698,7 @@ export default {
     .lb{
       display: flex;
       justify-content:space-between;
-      margin-top: 15px;
+      margin-top: 10px;
       span{
         font-size:12px;
 
@@ -508,6 +759,8 @@ export default {
       border-bottom: 0;
       padding: 0 40px;
       color: @color999;
+      font-size: 12px;
+      padding-top: 6px;
     }
   }
   .min,.puls{
@@ -575,16 +828,77 @@ export default {
 
 .trade_box {
   .list{
+    padding-bottom: 10px;
     .top{
       margin-bottom: 0;
     }
+
+    
+      .time{
+        .lx_mx{
+
+          span.buysell{
+            color: #0ec857 !important;
+          }
+          span.sellbuy{
+            color: @activeColor !important;
+          }
+          span:first-child{
+            margin-bottom: 20px;
+          }
+          &:nth-child(2){
+            span{
+              &:first-child{
+                color:#fff;
+              }
+              &:nth-child(2){
+                color:#0ec857;
+              }
+            }
+          }
+
+          &:last-child{
+            text-align: right;
+            .btn{
+              display: inline-block;
+            }
+          }
+        }
+      }
   }
 }
 
 .select_box{
+  z-index: 9999;
     .list.active {
         background: url("../../../assets/images/formIcons/selectd.png") no-repeat right center;
         background-size: 22px;
+    }
+
+    .stb{
+      display: flex;
+      span{
+        padding: 0 20px;
+        height: 40px;
+        line-height: 40px;
+        border-bottom: 1px solid #1f2326;
+        &.active{
+          border-color: @activeColor;
+        }
+      }
+    }
+    .sbx{
+      max-height: 400px;
+      overflow: auto;
+      .list{
+        height: 45px;
+        line-height: 45px;
+      }
+    }
+
+    &.nobox{
+      max-height: none;
+      overflow: hidden;
     }
   }
 </style>

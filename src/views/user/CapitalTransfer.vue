@@ -3,8 +3,9 @@
         <Header back></Header>
 
         <div class="list list_one">
-            <span>C2C/B2C账户</span>
+            <span v-if="$route.query.type!=2">C2C/B2C账户</span>
             <span>币币账户</span>
+            <span v-if="$route.query.type==2">C2C/B2C账户</span>
         </div>
         <div class="list list_two">
             <span>币种</span>

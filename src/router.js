@@ -74,7 +74,8 @@ const router = new Router({
           name: 'biBiTransaction',
           alias: '/biBiTransaction',
           meta: {
-            title: "币币交易"
+            title: "币币交易",
+            keepAlive: true
           },
           component: resolve => require(["@/views/tabIndex/views/BiBiTransaction"], resolve),
         },]
@@ -118,6 +119,14 @@ const router = new Router({
           isLogin: true
         },
         component: resolve => require(["@/views/user/FundTransfer"], resolve),
+      }, {
+        path: '/user/c2c_b2c/transferRecord',
+        name: 'transferRecord',
+        meta: {
+          title: "转移记录",
+          isLogin: true
+        },
+        component: resolve => require(["@/views/user/TransferRecord"], resolve),
       }, {
         path: '/user/c2c_b2c/btcMention',
         name: 'btcMention',
@@ -328,6 +337,21 @@ const router = new Router({
           title: "微信"
         },
         component: resolve => require(["@/views/account/WeChat"], resolve),
+      }, {
+        path: '/klinechat',
+        name: 'klinechat',
+        meta: {
+          title: "K线图"
+        },
+        component: resolve => require(["@/views/kLineChat/KLineChat"], resolve),
+      }, {
+        path: '/historicalRecord',
+        name: 'historicalRecord',
+        meta: {
+          title: "历史记录",
+          keepAlive: true
+        },
+        component: resolve => require(["@/views/tradeRecord/components/BiBiTrande"], resolve),
       },]
     }
   ]

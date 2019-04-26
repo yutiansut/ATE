@@ -35,10 +35,10 @@
                 </div>
             </div>
             <div class="btn_group">
-                <div class="btn">充币</div>
-                <div class="btn">提币</div>
-                <div class="btn">币币</div>
-                <div class="btn">资金划转</div>
+                <div class="btn" @click="$router.push('/user/c2c_b2c/coinCharging')">充币</div>
+                <div class="btn" @click="$router.push('/user/c2c_b2c/btcMention')">提币</div>
+                <div class="btn" @click="$router.push('/biBiTransaction')">币币</div>
+                <div class="btn" @click="$router.push('/user/c2c_b2c/capitalTransfer?type=2')">资金划转</div>
             </div>
         </div>
     </div>
