@@ -310,7 +310,9 @@ export default {
       })
         .then(() => {
           // on confirm
-          updateEntrustment({ id: item.id, status: 5 }).then(data => {});
+          updateEntrustment({ id: item.id, status: 5 }).then(data => {
+            this.myEntrustments();
+          });
         })
         .catch(() => {
           // on cancel

@@ -19,7 +19,7 @@
         </transition>
       </div>
     </div>
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" :class="{refreshActive:isLoading && !isHistoricalRecord}" class="tradeRecord_refresh_box" :style="{'padding-top':isHistoricalRecord?50+'px':0}">
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" class="tradeRecord_refresh_box" :style="{'padding-top':isHistoricalRecord?50+'px':0}">
       <div class="refresh_box trade_box">
         <div class="list" v-for="(item,index) in listArr" :key="index">
           <!-- <div class="top">
@@ -139,6 +139,7 @@ export default {
     },
     //   刷新
     onRefresh() {
+      this.listArr = [];
       if (this.active == 1) {
         this.myEntrustments();
       } else {
@@ -216,10 +217,9 @@ export default {
   text-align: right;
 }
 .trade_box{
-  
-.list{
-  padding-bottom: 15px;
-}
+  .list{
+    padding-bottom: 15px;
+  }
 }
 
 .bom{

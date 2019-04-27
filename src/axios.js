@@ -53,17 +53,25 @@ export default (params = {}) => {
     return new Promise((resolve, reject) => {
         Axios(httpDefault).then(data => {
             if (data.data.code == 1) {
-                if (params.tips) Toast.success(data.data.msg);
+                if (params.tips) {
+                    setTimeout(() => {
+                        Toast.success(data.data.msg)
+                    }, 100)
+                };
                 resolve(data.data.data);
             } else {
-                Toast.fail(data.data.msg)
+                setTimeout(() => {
+                    Toast.fail(data.data.msg)
+                }, 100)
                 if (data.data.code == 208 || data.data.code == 224) {
                     Router.push({ path: '/login', query: { isBack: true } })
                 }
                 reject(data.data);
             }
         }, err => {
-            Toast.fail("服务器旅行去了！")
+            setTimeout(() => {
+                Toast.fail("服务器旅行去了！")
+            }, 100)
             reject(err);
         });
     })

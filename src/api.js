@@ -83,3 +83,24 @@ export const unsettledGear = data => http({ url: '/quotes/unsettledGear', type: 
 
 // 币币交易-币种
 export const getcurrencybase = data => http({ url: '/currencybase/getcurrencybase', type: 'post', data });
+
+
+// C2C/B2C -列表
+export const getFiatDealTradeOrderList = data => http({ url: '/fiatDealTradeOrder/getFiatDealTradeOrderList', type: 'post', data });
+
+
+// C2C/B2C  -类型
+export const initCoinProperty = data => http({ url: '/advertising/initCoinProperty', type: 'post', data });
+
+// 广告发布 -列表
+
+export const getAdvertisingList = data => http({ url: '/advertising/list', type: 'post', data });
+
+// 广告发布 - 撤单
+export const advertisingCancel = data => http({ url: '/advertising/cancel', type: 'post', data, tips: true });
+
+// 充币-列表
+export const querytransactionlist = data => http({ url: '/usertransaction/querytransactionlist', type: 'post', data });
+
+// 提币-列表
+export const drawCoinList = data => http({ url: '/coin/drawCoinList', type: 'post', data });

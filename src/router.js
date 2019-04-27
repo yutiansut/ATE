@@ -352,6 +352,20 @@ const router = new Router({
           keepAlive: true
         },
         component: resolve => require(["@/views/tradeRecord/components/BiBiTrande"], resolve),
+      }, {
+        path: '/transaction',
+        name: 'transaction',
+        meta: {
+          title: "交易"
+        },
+        component: resolve => require(["@/views/transaction/Transaction"], resolve),
+      }, {
+        path: '/appeal',
+        name: 'appeal',
+        meta: {
+          title: "申诉"
+        },
+        component: resolve => require(["@/views/appeal/Appeal"], resolve),
       },]
     }
   ]

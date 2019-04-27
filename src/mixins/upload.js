@@ -34,7 +34,7 @@ export default {
             let files = this.$refs.upload.files;
             for (let i = 0; i < files.length; i++) {
                 if (this.imagesFiles.length >= this.uploadConfig.maxLen) {
-                    Toast.fail("最多上传5张图片");
+                    Toast.fail("最多上传" + this.uploadConfig.maxLen + "张图片");
                     break;
                 }
                 if (files[i].size > this.uploadConfig.maxSize) {
